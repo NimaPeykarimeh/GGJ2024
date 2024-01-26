@@ -19,5 +19,10 @@ public class movementController : MonoBehaviour
         moveDirection.x = Input.GetAxis("Horizontal");
         moveDirection.z = Input.GetAxis("Vertical");
         playerRb.velocity = moveDirection * movementSpeed;
+
+        if (moveDirection.magnitude > 0)
+        {
+            transform.forward = moveDirection.normalized;
+        }
     }
 }
