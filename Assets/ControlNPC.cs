@@ -17,6 +17,7 @@ public class ControlNPC : MonoBehaviour
 
     private void Awake()
     {
+        laugher= FindObjectOfType<Laugher>();
         laughMeter = transform.Find("Canvas").Find("LaughMeter").gameObject.GetComponent<Image>();
     }
     private void Update()
