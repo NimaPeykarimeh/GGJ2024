@@ -4,14 +4,20 @@ using UnityEngine;
 
 public class EnemyDetection : MonoBehaviour
 {
+    Laugher laugher;
+    GameManager gameManager;
     public Transform player;
     public float detectionRadius = 10f;
     public float detectionAngle = 45f;
     [SerializeField] Material eyeSightMat;
+    [SerializeField] bool isAlerted = false;
 
     private void Awake()
     {
+        gameManager = GameObject.FindGameObjectWithTag("GameManager").GetComponent<GameManager>();
         eyeSightMat = transform.Find("nimaguardtriangleplane").GetComponent<MeshRenderer>().material;
+        player = GameObject.FindGameObjectWithTag("Player").transform;
+        laugher = player.GetComponent<Laugher>();
     }
     private void Update()
     {
@@ -40,6 +46,11 @@ public class EnemyDetection : MonoBehaviour
             {
                 // Player is within the detection cone
                 Debug.Log("Player Detected!");
+                if (!isAlerted && laugher.isPranking)
+                {
+                    gameManager.TimeOver();
+                    
+                }
                 eyeSightMat.color = Color.red;
             }
             else
