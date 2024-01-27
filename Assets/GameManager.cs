@@ -80,9 +80,13 @@ public class GameManager : MonoBehaviour
 
     public void TimeOver()
     {
-        timerText.color = timeOutColor;
-        isTimeOver = true;
-        SetTimer(finalTimer);
+        if (!isTimeOver)
+        {
+            timerText.color = timeOutColor;
+            isTimeOver = true;
+            SetTimer(finalTimer);
+
+        }
     }
 
     void CountDown()

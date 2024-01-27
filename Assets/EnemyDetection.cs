@@ -48,6 +48,7 @@ public class EnemyDetection : MonoBehaviour
                 Debug.Log("Player Detected!");
                 if (!isAlerted && laugher.isPranking)
                 {
+                    isAlerted=true;
                     gameManager.TimeOver();
                     
                 }
