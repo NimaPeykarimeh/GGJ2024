@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 5086462848144288039}
   - component: {fileID: 8394883026052472566}
   - component: {fileID: 3012226458172495246}
+  - component: {fileID: 9091520019579717367}
   m_Layer: 6
   m_Name: NPC
   m_TagString: Untagged
@@ -65,7 +66,7 @@ MeshRenderer:
   m_RendererPriority: 0
   m_Materials:
   - {fileID: 2100000, guid: 73c176f402d2c2f4d929aa5da7585d17, type: 2}
-  - {fileID: 2100000, guid: 08e3499eff8885f45bce255d44310764, type: 2}
+  - {fileID: 2100000, guid: f768a2fcceeb19e4cb80af74e48f7b3f, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -122,10 +123,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5d3651b7a7ca780468f7be779f3f36a1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  laugher: {fileID: 0}
   isPranking: 0
   isLaughing: 0
   laughDuration: 3
   laughTimer: 0
+--- !u!114 &9091520019579717367
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4087220653445363759}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fd9d2fbec42f57040822e720bed48af3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &4285098377675344199
 GameObject:
   m_ObjectHideFlags: 0
