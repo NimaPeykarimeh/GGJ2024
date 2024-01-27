@@ -4,13 +4,16 @@ using UnityEngine;
 
 public class movementController : MonoBehaviour
 {
+    Laugher laugher;
     [SerializeField] float movementSpeed;
     Vector3 moveDirection;
 
     Rigidbody playerRb;
+    public bool canMove;
 
     private void Awake()
     {
+        laugher = GetComponent<Laugher>();
         playerRb = GetComponent<Rigidbody>();
     }
 
@@ -18,11 +21,18 @@ public class movementController : MonoBehaviour
     {
         moveDirection.x = Input.GetAxis("Horizontal");
         moveDirection.z = Input.GetAxis("Vertical");
-        playerRb.velocity = moveDirection * movementSpeed;
-
-        if (moveDirection.magnitude > 0)
+        if (canMove)
         {
-            transform.forward = moveDirection.normalized;
+            playerRb.velocity = moveDirection * movementSpeed;
+
+            if (moveDirection.magnitude > 0)
+            {
+                if (laugher.isPranking)
+                {
+                    laugher.startLaugher(false);
+                }
+                transform.forward = moveDirection.normalized;
+            }
         }
     }
 }
