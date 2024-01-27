@@ -10,7 +10,7 @@ public class Laugher : MonoBehaviour
     [SerializeField] LayerMask NPCLayer;
     [SerializeField] Collider[] colliders;
 
-    [SerializeField] GameObject[] NPCs;
+    [SerializeField] Collider[] NPCs;
     [SerializeField] GameObject curretnTargetNPC;
     public bool isPranking;
 
@@ -34,6 +34,8 @@ public class Laugher : MonoBehaviour
     public void NpcLaughed()
     {
         npcLaughCount++;
+        print(npcLaughCount);
+        print(NPCs.Length);
         if (npcLaughCount >= NPCs.Length)
         {
             isAllLaughing = true;
@@ -67,12 +69,12 @@ public class Laugher : MonoBehaviour
                 if (_currentDist < _minDist)
                 {
                     _minDist = _currentDist;
-                    foreach (GameObject _npc in NPCs)
+                    foreach (Collider _npc in NPCs)
                     {
-                        _npc.GetComponent<MeshRenderer>().materials[1].SetInt("_IsSelected", 0);
+                        _npc.GetComponent<SkinnedMeshRenderer>().materials[1].SetInt("_IsSelected", 0);
                     }
                     curretnTargetNPC = _col.gameObject;
-                    _col.GetComponent<MeshRenderer>().materials[1].SetInt("_IsSelected", 1);
+                    _col.GetComponent<SkinnedMeshRenderer>().materials[1].SetInt("_IsSelected", 1);
                 }
             }
 
@@ -80,9 +82,9 @@ public class Laugher : MonoBehaviour
         else
         {
             curretnTargetNPC = null;
-            foreach (GameObject _npc in NPCs)
+            foreach (Collider _npc in NPCs)
             {
-                _npc.GetComponent<MeshRenderer>().materials[1].SetInt("_IsSelected", 0);
+                _npc.GetComponent<SkinnedMeshRenderer>().materials[1].SetInt("_IsSelected", 0);
             }
         }
 
@@ -94,7 +96,7 @@ public class Laugher : MonoBehaviour
         if (curretnTargetNPC)
         {
             isPranking = _isPranking;
-            curretnTargetNPC.GetComponent<ControlNPC>().Laugh(_isPranking);
+            curretnTargetNPC.transform.parent.GetComponent<ControlNPC>().Laugh(_isPranking);
         }
     }
 }

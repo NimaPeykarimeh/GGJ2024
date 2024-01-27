@@ -13,7 +13,6 @@ GameObject:
   - component: {fileID: 5086462848144288039}
   - component: {fileID: 8394883026052472566}
   - component: {fileID: 3012226458172495246}
-  - component: {fileID: 9091520019579717367}
   m_Layer: 6
   m_Name: NPC
   m_TagString: Untagged
@@ -128,18 +127,6 @@ MonoBehaviour:
   isLaughing: 0
   laughDuration: 3
   laughTimer: 0
---- !u!114 &9091520019579717367
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4087220653445363759}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fd9d2fbec42f57040822e720bed48af3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &4285098377675344199
 GameObject:
   m_ObjectHideFlags: 0

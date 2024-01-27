@@ -2,57 +2,126 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.WSA;
 
 public class ControlNPC : MonoBehaviour
 {
+    Animator animator;
+    SkinnedMeshRenderer skinedMesh;
+
+    Transform canvasTransform;
     public Laugher laugher;
     public bool isPranking;
     public bool isLaughing;
     bool isBarChanging;
 
-    [SerializeField] float laughDuration = 3f;
+    [SerializeField] float laughDuration = 60f;
     [SerializeField] float laughTimer;
+
+    [SerializeField] float jokeDuration = 3f;
+    [SerializeField] float jokeTimer;
     Image laughMeter;
 
+    [Header("Materials")]
+    int randomMatIndex;
+    [SerializeField] Material[] laughMaterial;
+    [SerializeField] Material[] regularFacesMaterial;
+    Transform cameraTransform;
 
     private void Awake()
     {
+        cameraTransform = Camera.main.transform;
+        canvasTransform = transform.Find("Canvas");
+        animator = GetComponent<Animator>();
         laugher= FindObjectOfType<Laugher>();
         laughMeter = transform.Find("Canvas").Find("LaughMeter").gameObject.GetComponent<Image>();
+        skinedMesh = transform.Find("SkinnedMesh").GetComponent<SkinnedMeshRenderer>();
     }
+
+    private void Start()
+    {
+        SetRandomMat();
+    }
+
+    void CanvasToCamera()
+    {
+        canvasTransform.LookAt(cameraTransform.position);
+    }
+
+    void SetRandomMat()
+    {
+        randomMatIndex = Random.Range(0, laughMaterial.Length);
+        skinedMesh.material = regularFacesMaterial[randomMatIndex];
+    }
+
+    void LookAtPlayer()
+    {
+        Vector3 _dir = laugher.transform.position - transform.position;
+        _dir.y = 0;
+        transform.forward = _dir;
+    }
+
+    void LaughActivated()
+    {
+        jokeTimer = jokeDuration;
+        isLaughing = true;
+
+        laugher.NpcLaughed();
+        animator.SetBool("IsLaughin", true);
+        SwithFace();
+        laugher.isPranking = false;
+    }
+
     private void Update()
     {
+        CanvasToCamera();
         if (isBarChanging && !isLaughing)
         {
             if (isPranking)
             {
                 float _meterRatio;
-                laughTimer += Time.deltaTime;
-                if (laughTimer> laughDuration)
+                jokeTimer += Time.deltaTime;
+
+                LookAtPlayer();
+
+                if (jokeTimer > jokeDuration)
                 {
-                    laughTimer = laughDuration;
-                    isBarChanging = false;
-                    isLaughing = true;
-                    laugher.isAllLaughing = true;
-                    laugher.isPranking = false;
+                    LaughActivated();
                 }
-                _meterRatio = laughTimer / laughDuration;
+                _meterRatio = jokeTimer / jokeDuration;
                 laughMeter.fillAmount = _meterRatio;
             }
             else
             {
-                laughTimer -= Time.deltaTime;
-                if (laughTimer < 0)
+                jokeTimer -= Time.deltaTime;
+                if (jokeTimer < 0)
                 {
-                    laughTimer = 0;
+                    jokeTimer = 0;
                     isBarChanging = false;
                 }
                 float _meterRatio;
-                _meterRatio = laughTimer / laughDuration;
+                _meterRatio = jokeTimer / jokeDuration;
                 laughMeter.fillAmount = _meterRatio;
             }
-
         }
+        if (isLaughing)
+        {
+            float _meterRatio;
+            laughTimer -= Time.deltaTime;
+            if (laughTimer <0)
+            {
+                laughTimer = 0;
+                isLaughing = false;
+                isBarChanging = false;
+            }
+            _meterRatio = laughTimer / laughDuration;
+            laughMeter.fillAmount = _meterRatio;
+        }
+    }
+
+    void SwithFace()
+    {
+        skinedMesh.material = laughMaterial[randomMatIndex];
     }
 
     public void Laugh(bool isLaugh)
