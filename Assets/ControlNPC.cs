@@ -33,6 +33,7 @@ public class ControlNPC : MonoBehaviour
                     laughTimer = laughDuration;
                     isBarChanging = false;
                     isLaughing = true;
+                    laugher.isAllLaughing = true;
                     laugher.isPranking = false;
                 }
                 _meterRatio = laughTimer / laughDuration;

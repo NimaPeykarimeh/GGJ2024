@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Laugher : MonoBehaviour
 {
+    GameManager gameManager;
     [SerializeField] float activationRange;
 
     [SerializeField] LayerMask NPCLayer;
@@ -12,6 +13,14 @@ public class Laugher : MonoBehaviour
     [SerializeField] GameObject[] NPCs;
     [SerializeField] GameObject curretnTargetNPC;
     public bool isPranking;
+
+    int npcLaughCount;
+    public bool isAllLaughing;
+    private void Start()
+    {
+        gameManager = GameObject.FindGameObjectWithTag("GameManager").GetComponent<GameManager>();
+        npcLaughCount = 0;
+    }
     private void Update()
     {
         if (Input.GetKeyDown(KeyCode.E))
@@ -20,6 +29,23 @@ public class Laugher : MonoBehaviour
         }
 
         CheckCloseNpc();
+    }
+
+    public void NpcLaughed()
+    {
+        npcLaughCount++;
+        if (npcLaughCount >= NPCs.Length)
+        {
+            isAllLaughing = true;
+        }
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("BankSafe") && !isAllLaughing)
+        {
+            gameManager.TimeOver();
+        }
     }
 
     void CheckCloseNpc()
