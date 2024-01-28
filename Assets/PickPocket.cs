@@ -2,8 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[RequireComponent(typeof(AudioSource))]
 public class PickPocket : MonoBehaviour
 {
+    AudioSource audioSource;
+    [SerializeField] AudioClip pickMoneySound;
     MoneyManager moneyManager;
     Laugher laugher;
 
@@ -11,6 +14,7 @@ public class PickPocket : MonoBehaviour
 
     private void Awake()
     {   
+        audioSource = GetComponent<AudioSource>();
         moneyManager = FindAnyObjectByType<MoneyManager>();
         laugher = GetComponent<Laugher>();
     }
@@ -20,6 +24,7 @@ public class PickPocket : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.E) && CheckTheNPC()) 
         {
             laugher.curretnTargetNPC.transform.parent.GetComponent<ControlNPC>().isPicked = true;
+            audioSource.PlayOneShot(pickMoneySound);
             moneyManager.CollectMoney(GetRandomAmount());
         }
     }

@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class MoneyManager : MonoBehaviour
 {
-    [SerializeField] int currentMoney;
+    public int currentMoney;
     [SerializeField] TextMeshProUGUI moneyText;
     [SerializeField] GameObject moneyTextEffect;
 
