@@ -29,6 +29,11 @@ public class ControlNPC : MonoBehaviour
     [SerializeField] Material[] regularFacesMaterial;
     Transform cameraTransform;
 
+    [SerializeField] float surpriseTimer;
+    [SerializeField] float surpriseDuration = 10f;
+    [SerializeField] bool isSurprised;
+
+
     [Header("Emotions")]
     [SerializeField] GameObject laughEmotionObject;
     [SerializeField] GameObject surptiseObject;
@@ -134,10 +139,25 @@ public class ControlNPC : MonoBehaviour
             _meterRatio = laughTimer / laughDuration;
             laughMeter.fillAmount = _meterRatio;
         }
+
+        if (isSurprised)
+        {
+            float _meterRatio;
+            surpriseTimer -= Time.deltaTime;
+            if (surpriseTimer < 0)
+            {
+                surpriseTimer = 0;
+                isSurprised = false;
+                surptiseObject.SetActive(false);
+            }
+            _meterRatio = surpriseTimer / surpriseDuration;
+            laughMeter.fillAmount = _meterRatio;
+        }
     }
 
     void Surprise()
     {
+        surpriseTimer = surpriseDuration;
         surptiseObject.SetActive(true);
     }
 
