@@ -87,6 +87,7 @@ public class MoneyCollect : MonoBehaviour
     {
         if (!laugher.isPranking && currentGrabObject)
         {
+            print("aswasd");
             return true;
         }
         return false;

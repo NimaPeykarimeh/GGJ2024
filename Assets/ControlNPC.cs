@@ -171,11 +171,14 @@ public class ControlNPC : MonoBehaviour
     public bool Laugh(bool isLaugh, float _jokeDuration)
     {
         bool _result = (!isLaughing && !isPranking) && isLaugh;
-        if (!isPranking) 
+        if (!isSurprised)
         {
-            isBarChanging = true;
-            jokeDuration = _jokeDuration;
-            jokeTimer = 0;
+            if (!isPranking) 
+            {
+                isBarChanging = true;
+                jokeDuration = _jokeDuration;
+                jokeTimer = 0;
+            }
         }
         isPranking = isLaugh;
 

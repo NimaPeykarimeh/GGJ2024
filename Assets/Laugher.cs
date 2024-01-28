@@ -79,7 +79,7 @@ public class Laugher : MonoBehaviour
         }
         else
         {
-            int _rand = Random.Range(0, jokeAudios.Length);
+            int _rand = Random.Range(0, jokeAudios.Length - 1);
             currentAudioLenght = _rand;
             _selectedAudio = jokeAudios[_rand];
         }
@@ -171,14 +171,15 @@ public class Laugher : MonoBehaviour
             if (curretnTargetNPC.transform.parent.GetComponent<ControlNPC>().Laugh(_isPranking, currentAudioLenght))
             {
                 audioSource.PlayOneShot(_randAudio);
+                isPranking = _isPranking;
             }
-            isPranking = _isPranking;
         }
-        if (!_isPranking)
+        if (curretnTargetNPC && !_isPranking)
         {
             audioSource.Stop();
             curretnTargetNPC.transform.parent.GetComponent<ControlNPC>().Laugh(false, currentAudioLenght);
+            isPranking = _isPranking;
         }
-        isPranking = _isPranking;
+        
     }
 }
