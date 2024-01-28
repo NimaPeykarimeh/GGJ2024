@@ -51,6 +51,13 @@ public class PickPocket : MonoBehaviour
 
      bool CheckTheNPC() 
     {
-        return laugher.curretnTargetNPC.transform.parent.GetComponent<ControlNPC>().isLaughing && !laugher.curretnTargetNPC.transform.parent.GetComponent<ControlNPC>().isPicked;
+        if (laugher.curretnTargetNPC)
+        {
+            return laugher.curretnTargetNPC.transform.parent.GetComponent<ControlNPC>().isLaughing && !laugher.curretnTargetNPC.transform.parent.GetComponent<ControlNPC>().isPicked;
+        }
+        else
+        {
+            return false;
+        }
     }
 }

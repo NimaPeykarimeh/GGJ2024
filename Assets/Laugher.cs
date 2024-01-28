@@ -164,6 +164,7 @@ public class Laugher : MonoBehaviour
 
     public void startLaugher(bool _isPranking)
     {
+        
         if (curretnTargetNPC && _isPranking)
         {
             AudioClip _randAudio = GetRandomAudio();
@@ -171,7 +172,6 @@ public class Laugher : MonoBehaviour
             {
                 audioSource.PlayOneShot(_randAudio);
             }
-
             isPranking = _isPranking;
         }
         if (!_isPranking)
@@ -179,5 +179,6 @@ public class Laugher : MonoBehaviour
             audioSource.Stop();
             curretnTargetNPC.transform.parent.GetComponent<ControlNPC>().Laugh(false, currentAudioLenght);
         }
+        isPranking = _isPranking;
     }
 }
