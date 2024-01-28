@@ -157,6 +157,7 @@ public class ControlNPC : MonoBehaviour
 
     void Surprise()
     {
+        isSurprised = true;
         surpriseTimer = surpriseDuration;
         surptiseObject.SetActive(true);
     }
