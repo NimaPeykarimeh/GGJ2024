@@ -63,13 +63,13 @@ public class ControlNPC : MonoBehaviour
 
     void LaughActivated()
     {
-        jokeTimer = jokeDuration;
         isLaughing = true;
 
         laugher.NpcLaughed();
         animator.SetBool("IsLaughin", true);
         SwithFace();
         laugher.isPranking = false;
+        laughTimer = laughDuration;
     }
 
     private void Update()
@@ -110,6 +110,8 @@ public class ControlNPC : MonoBehaviour
             laughTimer -= Time.deltaTime;
             if (laughTimer <0)
             {
+                jokeTimer = 0;
+                animator.SetBool("IsLaughin", false);
                 laughTimer = 0;
                 isLaughing = false;
                 isBarChanging = false;
@@ -124,9 +126,11 @@ public class ControlNPC : MonoBehaviour
         skinedMesh.material = laughMaterial[randomMatIndex];
     }
 
-    public void Laugh(bool isLaugh)
+    public void Laugh(bool isLaugh, float _jokeDuration)
     {
         isBarChanging = true;
+        jokeDuration = _jokeDuration;
+        jokeTimer = 0;
         isPranking = isLaugh;
     }
 

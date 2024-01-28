@@ -13,6 +13,7 @@ public class securityMovement : MonoBehaviour
     public Vector3 moveDirection;
 
     [Header("Points")]
+     Transform checkPointParent;
     [SerializeField] Transform[] checkPointArray;
     [SerializeField] int pointCount;
     Transform currentPoint;
@@ -24,10 +25,27 @@ public class securityMovement : MonoBehaviour
     private void Awake()
     {
         securityLook = GetComponent<SecurityLook>();
-        pointCount = checkPointArray.Length - 1;
+        
+        
+        rb = GetComponent<Rigidbody>();
+    }
+
+    private void Start()
+    {
+        checkPointParent = transform.parent.Find("CheckPoints");
+        GetTheCheckPoints();
         currentPoint = checkPointArray[currentPointIndex];
 
-        rb = GetComponent<Rigidbody>();
+    }
+
+    void GetTheCheckPoints()//get the list of the check point by the childs of the parent
+    {
+        checkPointArray = new Transform[checkPointParent.childCount];
+        for (int i = 0; i < checkPointArray.Length; i++)
+        {
+            checkPointArray[i] = checkPointParent.GetChild(i);
+        }
+        pointCount = checkPointArray.Length - 1;
     }
 
     private void Update()

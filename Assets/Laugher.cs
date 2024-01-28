@@ -16,6 +16,14 @@ public class Laugher : MonoBehaviour
 
     int npcLaughCount;
     public bool isAllLaughing;
+
+    [Header("Sounds and Jokes")]
+    [SerializeField] AudioClip[] jokeAudios;
+    [SerializeField] AudioClip rarestAudio;
+    [SerializeField] float currentAudioLenght;
+
+    [Header("GasBomb")]
+    [SerializeField] float detectionRadius = 2f;
     private void Start()
     {
         gameManager = GameObject.FindGameObjectWithTag("GameManager").GetComponent<GameManager>();
@@ -27,8 +35,31 @@ public class Laugher : MonoBehaviour
         {
             startLaugher(true);
         }
-
+        if (Input.GetKeyDown(KeyCode.Q))
+        {
+            GasBomb();
+        }
         CheckCloseNpc();
+    }
+
+    AudioClip GetRandomAudio() 
+    {
+        int _randomForRarest = Random.Range(0, 101);
+        AudioClip _selectedAudio;
+
+        if (_randomForRarest == 100)
+        {
+            _selectedAudio = rarestAudio;
+        }
+        else
+        {
+            int _rand = Random.Range(0, jokeAudios.Length);
+            currentAudioLenght = _rand;
+            _selectedAudio = jokeAudios[_rand];
+        }
+
+        currentAudioLenght = _selectedAudio.length;
+        return _selectedAudio;
     }
 
     public void NpcLaughed()
@@ -47,6 +78,16 @@ public class Laugher : MonoBehaviour
         if (other.CompareTag("BankSafe") && !isAllLaughing)
         {
             gameManager.TimeOver();
+        }
+    }
+
+    void GasBomb()
+    {
+        Collider[] colliders = Physics.OverlapSphere(transform.position, detectionRadius, NPCLayer);
+
+        foreach (var collider in colliders)
+        {
+            collider.transform.parent.GetComponent<ControlNPC>().Laugh(true,0);
         }
     }
 
@@ -96,7 +137,7 @@ public class Laugher : MonoBehaviour
         if (curretnTargetNPC)
         {
             isPranking = _isPranking;
-            curretnTargetNPC.transform.parent.GetComponent<ControlNPC>().Laugh(_isPranking);
+            curretnTargetNPC.transform.parent.GetComponent<ControlNPC>().Laugh(_isPranking,currentAudioLenght);
         }
     }
 }
