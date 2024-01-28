@@ -10,10 +10,12 @@ public class GameManager : MonoBehaviour
     [SerializeField] TextMeshProUGUI timerText; 
     [SerializeField] float timer;
     bool isTimeOver;
+    public GameObject EndScreen;
     public float finalTimer = 60f;
     [SerializeField] Color timeOutColor;
     private void Start()
     {
+        Time.timeScale = 1;
         isTimeOver = false;
         timer = maxTime;
     }
@@ -29,9 +31,13 @@ public class GameManager : MonoBehaviour
 
     void GameOver()
     {
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        EndScreen.GetComponent<ToEndScreen>().ShowEndScreenPanel();
+        Time.timeScale = 0;
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        }
     }
-
     public void SetTimer(float timeToSet)
     {
         timer = timeToSet;
