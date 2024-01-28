@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Laugher : MonoBehaviour
 {
@@ -23,11 +24,18 @@ public class Laugher : MonoBehaviour
     [SerializeField] float currentAudioLenght;
 
     [Header("GasBomb")]
+    [SerializeField] Image gasBombImage;
     [SerializeField] float detectionRadius = 2f;
+    float gasBombTimer;
+    float gasBombCoolDown = 15f;
+    bool isGasBombFilling;
+    bool isGasBombReady;
     private void Start()
     {
         gameManager = GameObject.FindGameObjectWithTag("GameManager").GetComponent<GameManager>();
         npcLaughCount = 0;
+        gasBombTimer = gasBombCoolDown;
+        isGasBombReady = true;
     }
     private void Update()
     {
@@ -35,11 +43,22 @@ public class Laugher : MonoBehaviour
         {
             startLaugher(true);
         }
-        if (Input.GetKeyDown(KeyCode.Q))
+        if (Input.GetKeyDown(KeyCode.Q) && isGasBombReady)
         {
             GasBomb();
         }
         CheckCloseNpc();
+        if (isGasBombFilling)
+        {
+            gasBombTimer += Time.deltaTime;
+            float _fillAmount = gasBombTimer / gasBombCoolDown;
+            gasBombImage.fillAmount = _fillAmount;
+            if (_fillAmount >= 1)
+            {
+                isGasBombFilling = false;
+                isGasBombReady = true;
+            }
+        }
     }
 
     AudioClip GetRandomAudio() 
@@ -83,6 +102,10 @@ public class Laugher : MonoBehaviour
 
     void GasBomb()
     {
+        isGasBombFilling = true;
+        isGasBombReady = false;
+        gasBombTimer = 0;
+
         Collider[] colliders = Physics.OverlapSphere(transform.position, detectionRadius, NPCLayer);
 
         foreach (var collider in colliders)
