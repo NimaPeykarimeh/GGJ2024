@@ -1,12 +1,17 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+[RequireComponent(typeof(AudioSource))]
 public class MoneyCollect : MonoBehaviour
 {
+
+    AudioSource audioSource;
+    [SerializeField] AudioClip moneyDropCound;
+
     Laugher laugher;
     MoneyManager moneyManager;
 
+    [SerializeField] Transform moneyTrunk;
     [SerializeField] LayerMask moneyBagLayer;
     [SerializeField] LayerMask trunkLayer;
     [SerializeField] Transform grabPoint;
@@ -21,6 +26,7 @@ public class MoneyCollect : MonoBehaviour
 
     private void Awake()
     {
+        audioSource = GetComponent<AudioSource>();
         moneyManager = FindObjectOfType<MoneyManager>();
         laugher = GetComponent<Laugher>();
     }
@@ -56,23 +62,30 @@ public class MoneyCollect : MonoBehaviour
 
     void LeaveObject()
     {
+
         if (CheckForTrunk())
         {
+            audioSource.PlayOneShot(moneyDropCound);
             moneyManager.CollectMoney(moneyToAdd);
             currentGrabObject.layer = 0;
-            currentGrabObject.transform.parent = moneyManager.transform;
+            currentGrabObject.transform.parent = moneyTrunk.transform;
             Vector3 _currentPos = currentGrabObject.transform.localPosition;
             _currentPos.y = 0.64f;
-            currentGrabObject.transform.localPosition = _currentPos;
+            currentGrabObject.transform.localPosition = Vector3.zero;
 
         }
-        if (isGrabing)
+        else
         {
-            isGrabing = false;
             currentGrabObject.transform.parent = mainMoneyParent;
             Vector3 _currentPos = currentGrabObject.transform.localPosition;
             _currentPos.y = -2.48f;
             currentGrabObject.transform.localPosition = _currentPos;
+        }
+        if (isGrabing)
+        {
+            isGrabing = false;
+            
+            
 
         }
     }
