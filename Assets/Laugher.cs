@@ -6,13 +6,14 @@ using UnityEngine.UI;
 public class Laugher : MonoBehaviour
 {
     GameManager gameManager;
+    AudioSource audioSource;
     [SerializeField] float activationRange;
 
     [SerializeField] LayerMask NPCLayer;
     [SerializeField] Collider[] colliders;
 
     [SerializeField] Collider[] NPCs;
-    [SerializeField] GameObject curretnTargetNPC;
+    public GameObject curretnTargetNPC;
     public bool isPranking;
 
     int npcLaughCount;
@@ -30,6 +31,12 @@ public class Laugher : MonoBehaviour
     float gasBombCoolDown = 15f;
     bool isGasBombFilling;
     bool isGasBombReady;
+
+    private void Awake()
+    {
+        audioSource = GetComponent<AudioSource>();
+    }
+
     private void Start()
     {
         gameManager = GameObject.FindGameObjectWithTag("GameManager").GetComponent<GameManager>();
@@ -157,10 +164,20 @@ public class Laugher : MonoBehaviour
 
     public void startLaugher(bool _isPranking)
     {
-        if (curretnTargetNPC)
+        if (curretnTargetNPC && _isPranking)
         {
+            AudioClip _randAudio = GetRandomAudio();
+            if (curretnTargetNPC.transform.parent.GetComponent<ControlNPC>().Laugh(_isPranking, currentAudioLenght))
+            {
+                audioSource.PlayOneShot(_randAudio);
+            }
+
             isPranking = _isPranking;
-            curretnTargetNPC.transform.parent.GetComponent<ControlNPC>().Laugh(_isPranking,currentAudioLenght);
+        }
+        if (!_isPranking)
+        {
+            audioSource.Stop();
+            curretnTargetNPC.transform.parent.GetComponent<ControlNPC>().Laugh(false, currentAudioLenght);
         }
     }
 }

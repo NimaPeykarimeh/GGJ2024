@@ -10,6 +10,7 @@ public class ControlNPC : MonoBehaviour
     SkinnedMeshRenderer skinedMesh;
 
     Transform canvasTransform;
+    public bool isPicked;
     public Laugher laugher;
     public bool isPranking;
     public bool isLaughing;
@@ -28,6 +29,10 @@ public class ControlNPC : MonoBehaviour
     [SerializeField] Material[] regularFacesMaterial;
     Transform cameraTransform;
 
+    [Header("Emotions")]
+    [SerializeField] GameObject laughEmotionObject;
+    [SerializeField] GameObject surptiseObject;
+
     private void Awake()
     {
         cameraTransform = Camera.main.transform;
@@ -41,6 +46,9 @@ public class ControlNPC : MonoBehaviour
     private void Start()
     {
         SetRandomMat();
+        isPicked = false;
+        laughEmotionObject.SetActive(false);
+        laughMeter.fillAmount = 0;
     }
 
     void CanvasToCamera()
@@ -64,7 +72,7 @@ public class ControlNPC : MonoBehaviour
     void LaughActivated()
     {
         isLaughing = true;
-
+        laughEmotionObject.SetActive(true);
         laugher.NpcLaughed();
         animator.SetBool("IsLaughin", true);
         SwithFace();
@@ -111,6 +119,13 @@ public class ControlNPC : MonoBehaviour
             if (laughTimer <0)
             {
                 jokeTimer = 0;
+                laughEmotionObject.SetActive(false);
+                isPranking = false;
+                if (isPicked)
+                {
+                    Surprise();
+                }
+
                 animator.SetBool("IsLaughin", false);
                 laughTimer = 0;
                 isLaughing = false;
@@ -121,17 +136,29 @@ public class ControlNPC : MonoBehaviour
         }
     }
 
+    void Surprise()
+    {
+        surptiseObject.SetActive(true);
+    }
+
     void SwithFace()
     {
+
         skinedMesh.material = laughMaterial[randomMatIndex];
     }
 
-    public void Laugh(bool isLaugh, float _jokeDuration)
+    public bool Laugh(bool isLaugh, float _jokeDuration)
     {
-        isBarChanging = true;
-        jokeDuration = _jokeDuration;
-        jokeTimer = 0;
+        bool _result = (!isLaughing && !isPranking) && isLaugh;
+        if (!isPranking) 
+        {
+            isBarChanging = true;
+            jokeDuration = _jokeDuration;
+            jokeTimer = 0;
+        }
         isPranking = isLaugh;
+
+        return _result;
     }
 
 }
