@@ -126,6 +126,7 @@ public class ControlNPC : MonoBehaviour
                 jokeTimer = 0;
                 laughEmotionObject.SetActive(false);
                 isPranking = false;
+                laugher.npcLaughCount--;
                 if (isPicked)
                 {
                     Surprise();

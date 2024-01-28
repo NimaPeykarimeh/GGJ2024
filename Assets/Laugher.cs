@@ -16,7 +16,7 @@ public class Laugher : MonoBehaviour
     public GameObject curretnTargetNPC;
     public bool isPranking;
 
-    int npcLaughCount;
+    public int npcLaughCount;
     public bool isAllLaughing;
 
     [Header("Sounds and Jokes")]
@@ -76,10 +76,11 @@ public class Laugher : MonoBehaviour
         if (_randomForRarest == 100)
         {
             _selectedAudio = rarestAudio;
+
         }
         else
         {
-            int _rand = Random.Range(0, jokeAudios.Length - 1);
+            int _rand = Random.Range(0, jokeAudios.Length);
             currentAudioLenght = _rand;
             _selectedAudio = jokeAudios[_rand];
         }

@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Net;
 using UnityEngine;
 
 public class EnemyDetection : MonoBehaviour
@@ -26,6 +27,38 @@ public class EnemyDetection : MonoBehaviour
         CheckPlayer();
     }
 
+    bool CheckThePlayerRay()
+    {
+        
+        Ray ray = new Ray(transform.position, player.position - transform.position);
+
+        
+        float maxDistance = Vector3.Distance(transform.position, player.position) + 5;
+
+        
+        RaycastHit hit;
+
+        
+        if (Physics.Raycast(ray, out hit, maxDistance))
+        {
+        
+            Debug.Log("Hit object: " + hit.collider.gameObject.name);
+            if (hit.collider.CompareTag("Player"))
+            {
+                Debug.Log("PLAYERRRR");
+                return true;
+            }
+            Debug.Log("Otherrrr");
+            return false;
+        
+        }
+        else
+        {
+            Debug.Log("Ray did not hit anything.");
+        }
+        return false;
+    }
+
     void CheckPlayer()
     {
         float distanceToPlayer = Vector3.Distance(transform.position, player.position);
@@ -41,7 +74,7 @@ public class EnemyDetection : MonoBehaviour
             if (angleToPlayer <= detectionAngle * 0.5f)
             {
                 
-                if (!isAlerted && (laugher.isPranking || moneyCollect.isGrabing))
+                if (!isAlerted && (laugher.isPranking || moneyCollect.isGrabing) && CheckThePlayerRay())
                 {
                     isAlerted=true;
                     gameManager.TimeOver();
