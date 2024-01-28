@@ -42,7 +42,7 @@ public class FinishGame : MonoBehaviour
         }
     }
 
-    void RideTheTruck()
+    public void RideTheTruck()
     {
         decal1.SetActive(false);
         decal2.SetActive(false);

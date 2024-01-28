@@ -5,6 +5,7 @@ using UnityEngine;
 public class securityMovement : MonoBehaviour
 {
     SecurityLook securityLook;
+    Animator animator;
     Rigidbody rb;
 
     [SerializeField] float movementSpeed;
@@ -25,8 +26,8 @@ public class securityMovement : MonoBehaviour
     private void Awake()
     {
         securityLook = GetComponent<SecurityLook>();
-        
-        
+        animator = GetComponent<Animator>();
+
         rb = GetComponent<Rigidbody>();
     }
 
@@ -50,6 +51,7 @@ public class securityMovement : MonoBehaviour
 
     private void Update()
     {
+        animator.SetFloat("Velocity", rb.velocity.magnitude);
         if (isMoving)
         {
             moveDirection = (currentPoint.position - transform.position).normalized;
