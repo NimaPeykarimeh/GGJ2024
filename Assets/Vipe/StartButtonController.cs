@@ -3,16 +3,11 @@ using UnityEngine.SceneManagement;
 
 public class StartButtonController : MonoBehaviour
 {
-    public GameObject mainMenuPanel;
-    public GameObject controlsPanel;
-    void Start()
+    private void Update()
     {
-        // Baþlangýçta sadece ana menü panelini göster
-        mainMenuPanel.SetActive(true);
-        controlsPanel.SetActive(false);
-    }
-        public void OnStartButtonClick()
-    {
-        SceneManager.LoadScene("Tutorial");
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            SceneManager.LoadScene("OutdoorsScene");
+        }
     }
 }

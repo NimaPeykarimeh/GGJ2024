@@ -25,8 +25,6 @@ public class LevelFinisher : MonoBehaviour
         }
     }
 
-    
-
     void FinishTheGame()
     {
         finishGame.RideTheTruck();

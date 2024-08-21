@@ -122,11 +122,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5d3651b7a7ca780468f7be779f3f36a1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isPicked: 0
   laugher: {fileID: 0}
   isPranking: 0
   isLaughing: 0
   laughDuration: 3
   laughTimer: 0
+  jokeDuration: 3
+  jokeTimer: 0
+  laughMaterial: []
+  regularFacesMaterial: []
+  surpriseTimer: 0
+  surpriseDuration: 10
+  isSurprised: 0
+  laughEmotionObject: {fileID: 0}
+  surptiseObject: {fileID: 0}
 --- !u!1 &4285098377675344199
 GameObject:
   m_ObjectHideFlags: 0

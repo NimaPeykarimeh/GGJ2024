@@ -14,10 +14,12 @@ public class EnemyDetection : MonoBehaviour
     [SerializeField] Material eyeSightMat;
     [SerializeField] bool isAlerted = false;
 
+    [SerializeField] Color alertedColor;
+    [SerializeField] Color safeColor;
     private void Awake()
     {
         gameManager = GameObject.FindGameObjectWithTag("GameManager").GetComponent<GameManager>();
-        eyeSightMat = transform.Find("nimaguardtriangleplane").GetComponent<MeshRenderer>().material;
+        eyeSightMat = transform.Find("EyeSight").GetComponent<MeshRenderer>().material;
         player = GameObject.FindGameObjectWithTag("Player").transform;
         laugher = player.GetComponent<Laugher>();
         moneyCollect = player.GetComponent<MoneyCollect>();
@@ -80,16 +82,16 @@ public class EnemyDetection : MonoBehaviour
                     gameManager.TimeOver();
                     
                 }
-                eyeSightMat.color = Color.red;
+                eyeSightMat.color = alertedColor;
             }
             else
             {
-                eyeSightMat.color = Color.green;
+                eyeSightMat.color = safeColor;
             }
         }
         else
         {
-            eyeSightMat.color = Color.green;
+            eyeSightMat.color = safeColor;
         }
     }
 }

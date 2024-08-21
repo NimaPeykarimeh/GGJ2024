@@ -6,6 +6,7 @@ public class movementController : MonoBehaviour
 {
     Laugher laugher;
     [SerializeField] float movementSpeed;
+    //[SerializeField] float currentSpeed;
     Vector3 moveDirection;
 
     Rigidbody playerRb;
@@ -25,7 +26,7 @@ public class movementController : MonoBehaviour
         {
             playerRb.velocity = moveDirection * movementSpeed;
 
-            if (moveDirection.magnitude > 0)
+            if (moveDirection.magnitude > 0.1f)
             {
                 if (laugher.isPranking)
                 {

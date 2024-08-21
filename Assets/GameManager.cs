@@ -11,8 +11,10 @@ public class GameManager : MonoBehaviour
     [SerializeField] float timer;
     bool isTimeOver;
     public GameObject EndScreen;
+    public GameObject HUD;
     public float finalTimer = 60f;
     [SerializeField] Color timeOutColor;
+
     private void Start()
     {
         Time.timeScale = 1;
@@ -23,15 +25,16 @@ public class GameManager : MonoBehaviour
     private void Update()
     {
         CountDown();
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            ReduceTime(10);
-        }
+
     }
+
+    
 
     void GameOver()
     {
-        EndScreen.GetComponent<ToEndScreen>().ShowEndScreenPanel();
+
+        EndScreen.SetActive(true);
+        HUD.SetActive(false);
         Time.timeScale = 0;
         if (Input.GetKeyDown(KeyCode.Space))
         {

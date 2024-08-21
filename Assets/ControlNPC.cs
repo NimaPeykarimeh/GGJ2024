@@ -2,11 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using UnityEngine.WSA;
 
 public class ControlNPC : MonoBehaviour
 {
     Animator animator;
+    AudioSource audioSource;
+    [SerializeField] AudioClip clip;
     SkinnedMeshRenderer skinedMesh;
 
     Transform canvasTransform;
@@ -41,11 +42,12 @@ public class ControlNPC : MonoBehaviour
     private void Awake()
     {
         cameraTransform = Camera.main.transform;
-        canvasTransform = transform.Find("Canvas");
+        canvasTransform = transform.Find("LaughCanvas");
         animator = GetComponent<Animator>();
         laugher= FindObjectOfType<Laugher>();
-        laughMeter = transform.Find("Canvas").Find("LaughMeter").gameObject.GetComponent<Image>();
+        laughMeter = transform.Find("LaughCanvas").Find("LaughMeter").gameObject.GetComponent<Image>();
         skinedMesh = transform.Find("SkinnedMesh").GetComponent<SkinnedMeshRenderer>();
+        audioSource = GetComponent<AudioSource>();
     }
 
     private void Start()
@@ -77,6 +79,7 @@ public class ControlNPC : MonoBehaviour
     void LaughActivated()
     {
         isLaughing = true;
+        audioSource.PlayOneShot(clip);
         laughEmotionObject.SetActive(true);
         laugher.NpcLaughed();
         animator.SetBool("IsLaughin", true);
